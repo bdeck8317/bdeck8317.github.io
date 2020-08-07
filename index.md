@@ -1,9 +1,6 @@
 # Welcome!
 <img src="frnt_pg_img.png" class="inline"/>
-You can use the [editor on GitHub](https://github.com/bdeck8317/bdeck8317.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
+My name is Benjamin Deck. I am currently a PhD student at Drexel University study Cognitive Neuroscience. Much of my work uses data science tools to understand human cognition in both health and disease. Like it says above, I am an aspiring data scientist with a soft spot for the scientific method and academia. Please check out some of my projects below. If you're interested in working together please contact me here [Link] (bdeck8317@gmail.com)
 ### Markdown
 
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
