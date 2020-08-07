@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Welcome to my Project Database!
 <img src="frnt_pg_img.png" class="inline"/>
 You can use the [editor on GitHub](https://github.com/bdeck8317/bdeck8317.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
