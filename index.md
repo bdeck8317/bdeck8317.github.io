@@ -7,8 +7,8 @@ My name is Benjamin Deck. I am currently a PhD student at Drexel University stud
 
 
 # Contact information
- [email](mailto:bdeck8317@gmail.com)
+ [Email](mailto:bdeck8317@gmail.com)
  
- [twitter](https://twitter.com/bld_mctid)
+ [Twitter](https://twitter.com/bld_mctid)
  
- [researchgate](https://www.researchgate.net/profile/Benjamin_Deck)
+[Github](https://github.com/bdeck8317)
