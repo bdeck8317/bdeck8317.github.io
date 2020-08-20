@@ -7,7 +7,7 @@ My name is Benjamin Deck. I am currently a PhD student at Drexel University stud
 # Projects
 [Understanding Cognition in ADHD](https://github.com/CogNewLAB/ADHD_200)
 
-[Data Cleaning](Projects/mep_cest_cleaning.Rmd)
+[Data Cleaning](Cest_MEP_analysis.Rmd)
 
 # Contact information
 [Email](mailto:bdeck8317@gmail.com)
