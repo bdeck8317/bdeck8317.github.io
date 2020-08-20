@@ -1,0 +1,221 @@
+---
+title: "Cest_MEP_analysis"
+author: "Ben Deck"
+date: "8/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r,echo=FALSE}
+library(lmerTest)
+library(lme4)
+library(ggplot2)
+library(plyr)
+library(dplyr)
+
+```
+
+```{r, echo=FALSE}
+active_meps <- read.csv('/Users/Ben/Google Drive/CogNeW Laboratory Files/Projects/CEST-Motor/Data/Active/final_data/active_meps.csv')
+active_cest <- read.csv('/Users/Ben/Google Drive/CogNeW Laboratory Files/Projects/CEST-Motor/Data/Active/final_data/Active_Cest_long.csv')
+
+sham_meps <- read.csv('/Users/Ben/Google Drive/CogNeW Laboratory Files/Projects/CEST-Motor/Data/Sham1/final_data/sham_meps.csv')
+sham_cest <- read.csv('/Users/Ben/Google Drive/CogNeW Laboratory Files/Projects/CEST-Motor/Data/Sham1/final_data/Sham_cest_long.csv')
+
+active_cest$session <- as.factor(active_cest$session)
+active_cest$session <- factor(active_cest$session, levels = c('pre','post'))
+active_cest$active_1_sham_.1 <- as.factor(active_cest$active_1_sham_.1)
+sham_cest$session <- as.factor(sham_cest$session)
+sham_cest$session <- factor(sham_cest$session, levels = c('pre','post'))
+sham_cest$active_1_sham_.1 <- as.factor(sham_cest$active_1_sham_.1)
+
+active_meps$session <- as.factor(active_meps$session)
+active_meps$session <- factor(active_meps$session, levels = c('pre','post'))
+sham_meps$session <- as.factor(sham_meps$session)
+sham_meps$session <- factor(sham_meps$session, levels = c('pre','post'))
+```
+
+
+```{r, echo= FALSE,warning=FALSE,message=FALSE}
+active_baseline <- subset.data.frame(active_meps, Timepoint == 'baseline')
+active_post0 <- subset.data.frame(active_meps, Timepoint == 'post0')
+active_post10 <- subset.data.frame(active_meps, Timepoint == 'post10')
+active_post20 <- subset.data.frame(active_meps, Timepoint == 'post20')
+active_post30 <- subset.data.frame(active_meps, Timepoint == 'post30')
+
+
+sham_baseline <- subset.data.frame(sham_meps, Timepoint == 'baseline')
+sham_post0 <- subset.data.frame(sham_meps, Timepoint == 'post0')
+sham_post10 <- subset.data.frame(sham_meps, Timepoint == 'post10')
+sham_post20 <- subset.data.frame(sham_meps, Timepoint == 'post20')
+sham_post30 <- subset.data.frame(sham_meps, Timepoint == 'post30')
+
+
+```
+
+
+
+# Active Group
+Active group Cest change from pre to post
+```{r, echo = FALSE}
+
+ggplot(active_cest, aes(session, X1024, fill= session)) +
+  geom_boxplot() +
+   ylim(0.07, 0.1) +
+  labs(y = 'Left-Hemisphere Mean Cest', x = 'Session')
+ggplot(active_cest, aes(session, X1024, color = ID)) +
+  geom_point() +
+  geom_line() +
+  labs(y = 'Left-Hemisphere Mean Cest', x = 'Session')
+
+
+ggplot(active_cest, aes(session, X2024, fill= session)) +
+  geom_boxplot() +
+   ylim(0.07, 0.1) +
+  labs(y = 'Right-Hemisphere Mean Cest', x = 'Session')
+ggplot(active_cest, aes(session, X2024, color = ID)) +
+  geom_point() +
+  geom_line() +
+  labs(y = 'Right-Hemisphere Mean Cest', x = 'Session')
+
+```
+
+
+
+
+Active average mep trace over all sessions
+```{r, echo=FALSE}
+
+ggplot(active_meps, aes(x = Timepoint, y = Mep_AMP, color = ID, group = ID)) +
+  geom_point(stat = 'summary') + geom_line(stat = 'summary')
+
+ggplot(active_meps, aes(x = Timepoint, y =Mep_AMP)) + geom_violin()
+
+
+
+```
+
+
+Active average Cest 
+```{r, echo=FALSE}
+active_pre_cest_data <- subset.data.frame(active_cest, active_cest$session =='pre')
+active_post_cest_data <-  subset.data.frame(active_cest, active_cest$session =='post')
+
+active_lh.precentral_change <-  active_pre_cest_data$`1024` - active_post_cest_data$`1024`
+
+```
+
+
+
+# Sham Group
+Sham group Cest change from pre to post
+```{r, echo=FALSE}
+
+ggplot(sham_cest, aes(session, X1024, fill = session)) +
+  geom_boxplot() +
+   ylim(0.07, 0.1) +
+  labs(y = 'Left-Hemisphere Mean Cest', x = 'Session')
+
+ggplot(sham_cest, aes(session, X1024, color = ID)) +
+  geom_point() +
+  geom_line() +
+  labs(y = 'Left-Hemisphere Mean Cest', x = 'Session')
+
+
+ggplot(sham_cest, aes(session, X2024, fill= session)) +
+  geom_boxplot() +
+   ylim(0.07, 0.1) +
+  labs(y = 'Right-Hemisphere Mean Cest', x = 'Session')
+ggplot(sham_cest, aes(session, X2024, color = ID)) +
+  geom_point() +
+  geom_line() +
+  labs(y = 'Right-Hemisphere Mean Cest', x = 'Session')
+
+```
+
+
+
+Sham average mep trace over all sessions
+```{R, echo = FALSE}
+ggplot(sham_meps, aes(x = Timepoint, y = Mep_AMP, color = ID, group = ID)) +
+  geom_point(stat = 'summary') + geom_line(stat = 'summary') + ylim(0,5)
+
+ggplot(sham_meps, aes(x = Timepoint, y =Mep_AMP)) + geom_violin() + ylim(0,8)
+
+```
+
+
+
+
+```{r, echo=FALSE}
+sham_pre_cest_data <- subset.data.frame(sham_cest, sham_cest$session =='pre')
+sham_post_cest_data <-  subset.data.frame(sham_cest, sham_cest$session =='post')
+
+sham_lh.precentral_change <-  sham_pre_cest_data$`1024` - sham_post_cest_data$`1024`
+
+```
+
+
+
+
+##Does baseline Cest Value predict Baseline MEP value?
+
+```{r, echo=FALSE}
+#prepping the dataframes
+baseline_meps <- rbind(active_baseline, sham_baseline)
+baseline_meps <- baseline_meps %>% group_by(ID) %>% mutate(counter =row_number(ID))
+
+cest_active_baseline <- subset.data.frame(active_cest, session == 'pre')
+cest_sham_baseline <-  subset.data.frame(sham_cest, session =='pre')
+cest_baseline <- rbind.fill(cest_active_baseline, cest_sham_baseline)
+cest_baseline <- cest_baseline %>% group_by(ID) %>% mutate(counter =row_number(ID))
+
+```
+
+
+
+```{r, echo=FALSE}
+hist(baseline_meps$Mep_AMP)
+hist(cest_baseline$X1024)
+ggplot(baseline_meps, aes(x =X1.Channel.1.X, y = Mep_AMP, color = ID)) +
+  geom_point() +
+  labs( x = 'Mep Count', y = 'Mep Amplitude', title = 'Mep Count by Mep Amplitude per subject')
+ggplot(baseline_meps, aes(x  = cest_baseline$X1024, y = Mep_AMP, color = as.factor(active_1_sham_.1))) +
+  geom_point() +
+  labs( title = 'Mean Baseline Cest Value at Left M1 by Mep Amplitude', x = 'Mean Baseline Cest Value' , y = 'Mep Amplitude',color = 'Sham = -1, Active = 1')
+
+
+
+```
+
+
+
+## Does baseline Cest Value predict Baseline MEP value with a random intercept of ID
+```{r}
+m.1 <- lmerTest::lmer(baseline_meps$Mep_AMP ~ cest_baseline$X1024 + (1 | cest_baseline$ID), data = cest_baseline, REML = FALSE)
+summary(m.1)
+
+```
+
+
+
+## Does baseline Cest Value predict Baseline MEP value with a random intercept of ID and random slope of mep count?
+```{r}
+m.2 <- lmerTest::lmer(baseline_meps$Mep_AMP ~ cest_baseline$X1024 + (scale(cest_baseline$counter, center = TRUE) | cest_baseline$ID), data = cest_baseline, REML = FALSE)
+summary(m.2)
+```
+
+
+## Does baseline Cest Value predict Baseline MEP interaction with mep count with a random intercept of ID and random slope of mep count?
+```{r}
+
+m.3 <- lmerTest::lmer(baseline_meps$Mep_AMP ~ cest_baseline$X1024*scale(cest_baseline$counter, center = TRUE) + (scale(cest_baseline$counter, center = TRUE) | cest_baseline$ID), data = cest_baseline, REML = FALSE)
+summary(m.3)
+
+
+
+
+```
