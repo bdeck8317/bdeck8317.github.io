@@ -1,5 +1,5 @@
 ---
-layout: page
+theme: jekyll-theme-slate
 title: Projects
 ---
 
