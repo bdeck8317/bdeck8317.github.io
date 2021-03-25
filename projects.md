@@ -6,7 +6,10 @@ The code is freely available but at this time much of the data is not.
 
 ## Predicting Attention Deficit Hyperactivity Disorder behavior using brain activity
 Here you will find my master's thesis project which uses support vector regression to predict survey responses about young adults with attention deficit hyperactivity disorder (ADHD)
-<img src="fpcn.png" class="inline"/> <img src="dmn.png" class="inline"/>
+
+
+<img src="fpcn.png" class="inline"/> 
+<img src="dmn.png" class="inline"/>
 
 
 ## Predicting cognitive control behaviors in Adults using brain activity
